@@ -5,6 +5,7 @@ class Order < ApplicationRecord
   accepts_nested_attributes_for :ordered_lists
 
   def update_total_quantity
+    #ActiveRecord::Base.transaction do
     self.ordered_lists.each do |line_item|
       item = Item.lock.find_by(id: line_item.item_id)
       item.total_quantity += line_item.quantity
